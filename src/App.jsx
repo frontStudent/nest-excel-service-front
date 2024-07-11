@@ -60,7 +60,7 @@ const App = () => {
       <Upload name="customerFile" {...props}>
         <Button icon={<UploadOutlined />}>上传客户文件</Button>
       </Upload>
-      <Button onClick={handleExport}>确定</Button>
+      <Button onClick={handleExport}>确定1</Button>
       <div>{loading ? "正在分析中..." : "分析完毕，请查看浏览器下载列表"}</div>
     </div>
   );
