@@ -2,9 +2,13 @@ import { useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, message, Upload } from "antd";
 import axios from "axios";
+const IP = "1.12.238.239";
+const PORT = "3000";
+const UPLOAD_URL = `http://${IP}:${PORT}/upload`;
+const EXPORT_URL = `http://${IP}:${PORT}/export`;
 
 const props = {
-  action: "http://localhost:3000/upload",
+  action: UPLOAD_URL,
   beforeUpload: (file) => {
     let flag = true;
     if (!file?.name.toLowerCase().endsWith(".xlsx")) {
@@ -26,17 +30,16 @@ const props = {
   maxCount: 1,
 };
 
-
 const App = () => {
   const [loading, setLoading] = useState(false);
   const handleExport = () => {
-    setLoading(true)
+    setLoading(true);
     axios
-      .get("http://localhost:3000/export", {
+      .get(EXPORT_URL, {
         responseType: "blob", // 重要：指定响应类型为blob
       })
       .then((response) => {
-        setLoading(false)
+        setLoading(false);
         console.log(response.data, "response.data");
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
@@ -48,7 +51,7 @@ const App = () => {
         window.URL.revokeObjectURL(url);
       })
       .catch((error) => {
-        setLoading(false)
+        setLoading(false);
         console.error("导出失败:", error);
       });
   };
@@ -64,8 +67,6 @@ const App = () => {
       <div>{loading ? "正在分析中..." : "分析完毕，请查看浏览器下载列表"}</div>
     </div>
   );
-}
-
-  
+};
 
 export default App;
